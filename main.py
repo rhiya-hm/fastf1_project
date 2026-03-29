@@ -1,6 +1,9 @@
+from typing import Any
+from datetime import datetime, timezone
 import fastf1
 #import os
 import pandas as pd
+from fastf1.core import Session
 
 # Optional but recommended: enables local caching
 fastf1.Cache.enable_cache('cache')
@@ -14,14 +17,17 @@ fastf1.Cache.enable_cache('cache')
 #print(session.results[['FullName', 'TeamName', 'Position']].head())
 
 #print all races
-schedule = fastf1.get_event_schedule(2025)
+schedule = fastf1.get_event_schedule(2026)
 #print(schedule[['RoundNumber','EventName','Country']])
 schedule = schedule[schedule['EventFormat'] == 'conventional']
 
-winners = []
+winners: list[Any] = []
 
+round_number: object
 for round_number in schedule['RoundNumber']:
-    session = fastf1.get_session(2023, round_number, 'R')
+    session: Session = fastf1.get_session(2026, round_number, 'R')
+    if datetime.now(timezone.utc) < session.event['Session5DateUtc'].replace(tzinfo=timezone.utc):
+        break
     session.load()
 
     winners.append({
