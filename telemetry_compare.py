@@ -13,21 +13,24 @@ Output: telemetry_compare_output.png  (also opens in a window)
 """
 
 import warnings
+
+from matplotlib.colorbar import Colorbar
+
 warnings.filterwarnings("ignore")
 
-import fastf1
+from fastf1 import plotting, get_session, Cache
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
+import matplotlib.gridspec
 from matplotlib.collections import LineCollection
 from matplotlib.colors import Normalize, TwoSlopeNorm
-import matplotlib.patches as mpatches
+#import matplotlib.patches as patches
 
 # ── CACHE & CONFIG ─────────────────────────────────────────────────────────────
-fastf1.Cache.enable_cache('Cache')
+Cache.enable_cache('Cache')
 
-YEAR        = 2026
-EVENT       = 'Japanese Grand Prix'
+YEAR        = 2025
+EVENT       = 'Qatar Grand Prix'
 SESSION_TYPE = 'Q'
 # Q = Qualifying
 # R = Race
@@ -48,11 +51,11 @@ def fmt_lap(td):
 def get_driver_color(driver_abbr, session, fallback):
     """Safely retrieve driver colour from FastF1, falling back gracefully."""
     try:
-        return fastf1.plotting.get_driver_color(driver_abbr, session=session)
+        return plotting.get_driver_color(driver_abbr, session=session)
     except Exception:
         pass
     try:
-        return fastf1.plotting.DRIVER_COLORS.get(driver_abbr, fallback)
+        return plotting.DRIVER_COLORS.get(driver_abbr, fallback)
     except Exception:
         return fallback
 
@@ -91,12 +94,12 @@ def add_colorbar(ax, cmap, norm, label, bg='#0d0d1a'):
     ax.axis('off')
     sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
     sm.set_array([])
-    cbar = plt.colorbar(sm, ax=ax, fraction=0.35, pad=0.05,
+    cbar: Colorbar = plt.colorbar(sm, ax=ax, fraction=0.35, pad=0.05,
                         orientation='vertical')
     cbar.set_label(label, color='white', fontsize=9)
     cbar.ax.yaxis.set_tick_params(color='white', labelsize=8)
     plt.setp(cbar.ax.yaxis.get_ticklabels(), color='white')
-    cbar.outline.set_edgecolor('#444')
+    cbar.outline.set_edgecolor
 
 
 # ── LOAD SESSION ───────────────────────────────────────────────────────────────
@@ -105,7 +108,7 @@ print(f"  {YEAR} {EVENT} — Qualifying Telemetry Comparison")
 print(f"{'─'*55}")
 print(f"📦  Loading session data…")
 
-session = fastf1.get_session(YEAR, EVENT, SESSION_TYPE)
+session = get_session(YEAR, EVENT, SESSION_TYPE)
 session.load(laps=True, telemetry=True, weather=False, messages=False)
 
 # ── PICK DRIVERS ───────────────────────────────────────────────────────────────
@@ -154,7 +157,7 @@ BG = '#0d0d1a'
 fig = plt.figure(figsize=(20, 15))
 fig.patch.set_facecolor(BG)
 
-gs = gridspec.GridSpec(
+gs = matplotlib.gridspec.GridSpec(
     3, 4,
     figure=fig,
     height_ratios=[1, 1, 0.9],
