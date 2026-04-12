@@ -29,8 +29,9 @@ from matplotlib.colors import Normalize, TwoSlopeNorm
 # ── CACHE & CONFIG ─────────────────────────────────────────────────────────────
 Cache.enable_cache('Cache')
 
-YEAR        = 2025
-EVENT       = 'Qatar Grand Prix'
+YEAR        = 2026
+EVENT       = 'Miami Grand Prix'
+EVENT       = 'Miami Grand Prix'
 SESSION_TYPE = 'Q'
 # Q = Qualifying
 # R = Race
