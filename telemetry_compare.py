@@ -26,12 +26,12 @@ import matplotlib.patches as mpatches
 # ── CACHE & CONFIG ─────────────────────────────────────────────────────────────
 fastf1.Cache.enable_cache('Cache')
 
-YEAR        = 2024
-EVENT       = 'British Grand Prix'
+YEAR        = 2026
+EVENT       = 'Japanese Grand Prix'
 SESSION_TYPE = 'Q'
 # Q = Qualifying
 # R = Race
-OUTPUT_FILE = f'telemetry_compare_files/{YEAR}_{EVENT.replace(" ", "_")}_telemetry.png'
+OUTPUT_FILE = f'telemetry_compare_files/{YEAR}_{EVENT.replace(" ", "_")}_telemetry_{SESSION_TYPE}.png'
 
 # Fallback colours if FastF1 can't provide team colours
 FALLBACK_COLORS = ['#FF1E00', '#0067FF']
