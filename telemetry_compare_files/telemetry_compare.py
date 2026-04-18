@@ -26,7 +26,7 @@ from matplotlib.collections import LineCollection
 from matplotlib.colors import Normalize, TwoSlopeNorm
 
 # ── CACHE & CONFIG ─────────────────────────────────────────────────────────────
-Cache.enable_cache('Cache')
+Cache.enable_cache('../Cache')
 
 YEAR        = 2026
 EVENT       = 'Miami Grand Prix'
