@@ -30,17 +30,15 @@ A local cache folder (`Cache/`) is created automatically on first run to avoid r
 
 ```
 fastf1_project/
-├── main.py                  # Entry point — prints 2026 race winners to date
-├── Qatar_lap_by_lap.py      # Lap-time table and race charts for Qatar GP 2025
-├── predictions.py           # Random Forest model predicting race finishing order
-├── miami_predictor.py       # Focused prediction for the 2026 Miami Grand Prix
-├── telemetry_compare.py     # Qualifying telemetry comparison (track map + speed trace)
-├── tyre_strategy.py         # Full 2025 season tyre strategy analysis (3 charts)
-├── plot_laptimes.py         # Placeholder — lap time plotting
-├── explore_session.py       # Placeholder — session exploration
-├── telemetry_compare_files/ # Output folder for telemetry charts
-├── tyre_strategy_files/     # Output folder for tyre strategy charts
-├── Cache/                   # FastF1 local cache (auto-generated)
+├── main.py                              # Entry point — prints 2026 race winners to date
+├── miami_predictor.py                   # Random Forest prediction for the 2026 Miami Grand Prix
+├── telemetry_compare.py                 # Qualifying telemetry comparison (track map + speed trace)
+├── Lap_by_Laps/
+│   └── Qatar_lap_by_lap.py              # Lap-time table and race charts for Qatar GP 2025
+├── tyre_strategy_files/
+│   └── tyre_strategy.py                 # Full 2025 season tyre strategy analysis (3 charts)
+├── telemetry_compare_files/             # Output folder for telemetry charts
+├── Cache/                               # FastF1 local cache (auto-generated)
 └── requirements.txt
 ```
 
@@ -51,16 +49,13 @@ fastf1_project/
 ### `main.py`
 Iterates all completed conventional races in the 2026 season and prints a table of race winners. Stops automatically at any race that hasn't happened yet using UTC timestamps.
 
-### `Qatar_lap_by_lap.py`
+### `Lap_by_Laps/Qatar_lap_by_lap.py`
 Loads the 2025 Qatar Grand Prix race session and produces:
 - A printed table of best lap and average lap time per driver (outlier laps filtered at 115% of personal best)
 - A dual-chart figure: lap times over the race for all drivers, and a fastest-lap bar chart per driver
 
-### `predictions.py`
-Trains a **Random Forest Regressor** on 2022–2025 historical race results (grid position, driver, team, recent form) and predicts the finishing order for the 2026 Miami Grand Prix. Features include rolling 3-race form averages and circuit-specific flags. Outputs model accuracy (MAE) and feature importances alongside the predicted grid.
-
 ### `miami_predictor.py`
-A standalone Miami-focused predictor producing the same lap-time table and charts as `lap_by_lap.py` but scoped to Qatar 2025 as a base dataset.
+Trains a **Random Forest Regressor** on 2022–2025 historical race results (grid position, driver, team, recent form) and predicts the finishing order for the 2026 Miami Grand Prix. Features include rolling 3-race form averages and a circuit-specific Miami flag. Outputs model accuracy (MAE) and feature importances alongside the predicted grid.
 
 ### `telemetry_compare.py`
 Compares the qualifying telemetry of the top two drivers at a given race (default: 2026 Chinese GP). Produces a dark-themed three-panel figure:
@@ -70,8 +65,8 @@ Compares the qualifying telemetry of the top two drivers at a given race (defaul
 
 Output is saved to `telemetry_compare_files/`. Change `YEAR`, `EVENT`, or driver indices at the top of the file to compare any session.
 
-### `tyre_strategy.py`
-Loads all conventional races from the 2025 season and produces three charts saved to `tyre_strategy_files/`:
+### `tyre_strategy_files/tyre_strategy.py`
+Loads all conventional races from the 2025 season and produces three charts saved alongside the script in `tyre_strategy_files/`:
 
 1. **`01_strategy_timeline_{Race}_{Year}.png`** — per-driver Gantt-style stint map for a chosen showcase race, coloured by compound and sorted by finishing position
 2. **`02_compound_degradation.png`** — aggregate lap-time delta vs tyre age for soft/medium/hard across the full season, with ±1 std dev bands
@@ -91,16 +86,16 @@ source .venv/bin/activate
 python main.py
 
 # Lap time analysis (Qatar 2025)
-python Qatar_lap_by_lap.py
+python Lap_by_Laps/Qatar_lap_by_lap.py
 
 # Race outcome predictions (Miami 2026)
-python predictions.py
+python miami_predictor.py
 
 # Qualifying telemetry comparison
 python telemetry_compare.py
 
 # Full season tyre strategy analysis
-python tyre_strategy.py
+python tyre_strategy_files/tyre_strategy.py
 ```
 
 > **Note:** First-run data fetching can take several minutes depending on the session. All data is cached locally in `Cache/` for fast repeat runs.

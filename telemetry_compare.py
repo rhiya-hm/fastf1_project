@@ -24,13 +24,11 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec
 from matplotlib.collections import LineCollection
 from matplotlib.colors import Normalize, TwoSlopeNorm
-#import matplotlib.patches as patches
 
 # ── CACHE & CONFIG ─────────────────────────────────────────────────────────────
 Cache.enable_cache('Cache')
 
 YEAR        = 2026
-EVENT       = 'Miami Grand Prix'
 EVENT       = 'Miami Grand Prix'
 SESSION_TYPE = 'Q'
 # Q = Qualifying
@@ -63,12 +61,10 @@ def get_driver_color(driver_abbr, session, fallback):
 
 def resample_telemetry(tel, dist_axis):
     """Interpolate telemetry channels onto a common distance axis."""
-    speed    = np.interp(dist_axis, tel['Distance'], tel['Speed'])
-    throttle = np.interp(dist_axis, tel['Distance'], tel['Throttle'])
-    brake    = np.interp(dist_axis, tel['Distance'], tel['Brake'].astype(float))
-    x        = np.interp(dist_axis, tel['Distance'], tel['X'])
-    y        = np.interp(dist_axis, tel['Distance'], tel['Y'])
-    return speed, throttle, brake, x, y
+    speed = np.interp(dist_axis, tel['Distance'], tel['Speed'])
+    x     = np.interp(dist_axis, tel['Distance'], tel['X'])
+    y     = np.interp(dist_axis, tel['Distance'], tel['Y'])
+    return speed, x, y
 
 
 def make_track_map(ax, x, y, values, cmap, norm, title, bg='#0d0d1a'):
@@ -100,7 +96,6 @@ def add_colorbar(ax, cmap, norm, label, bg='#0d0d1a'):
     cbar.set_label(label, color='white', fontsize=9)
     cbar.ax.yaxis.set_tick_params(color='white', labelsize=8)
     plt.setp(cbar.ax.yaxis.get_ticklabels(), color='white')
-    cbar.outline.set_edgecolor
 
 
 # ── LOAD SESSION ───────────────────────────────────────────────────────────────
@@ -145,8 +140,8 @@ d_min = max(t1['Distance'].min(), t2['Distance'].min())
 d_max = min(t1['Distance'].max(), t2['Distance'].max())
 dist  = np.linspace(d_min, d_max, NUM_POINTS)
 
-speed1, throttle1, brake1, x1, y1 = resample_telemetry(t1, dist)
-speed2, throttle2, brake2, x2, y2 = resample_telemetry(t2, dist)
+speed1, x1, y1 = resample_telemetry(t1, dist)
+speed2, _, _   = resample_telemetry(t2, dist)
 
 # Use driver 1's GPS trace as the reference track path
 x_ref, y_ref = x1, y1

@@ -220,13 +220,8 @@ plt.close()
 print(f"\n📊  [2/3]  Building compound degradation curves…")
 
 # Only accurate, dry-compound laps with valid tyre age
-if 'IsAccurate' in df.columns:
-    acc_mask = df['IsAccurate'] == True
-else:
-    acc_mask = pd.Series(True, index=df.index)
-
 deg_df = df[
-    acc_mask &
+    (df['IsAccurate'] == True) &
     df['Compound'].isin(['SOFT', 'MEDIUM', 'HARD']) &
     df['TyreLife'].notna() &
     df['LapTimeSeconds'].notna() &
