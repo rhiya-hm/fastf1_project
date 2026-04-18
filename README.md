@@ -31,7 +31,7 @@ A local cache folder (`Cache/`) is created automatically on first run to avoid r
 ```
 fastf1_project/
 ├── main.py                  # Entry point — prints 2026 race winners to date
-├── lap_by_lap.py            # Lap-time table and race charts for Qatar GP 2025
+├── Qatar_lap_by_lap.py      # Lap-time table and race charts for Qatar GP 2025
 ├── predictions.py           # Random Forest model predicting race finishing order
 ├── miami_predictor.py       # Focused prediction for the 2026 Miami Grand Prix
 ├── telemetry_compare.py     # Qualifying telemetry comparison (track map + speed trace)
