@@ -91,7 +91,7 @@ source .venv/bin/activate
 python main.py
 
 # Lap time analysis (Qatar 2025)
-python lap_by_lap.py
+python Qatar_lap_by_lap.py
 
 # Race outcome predictions (Miami 2026)
 python predictions.py

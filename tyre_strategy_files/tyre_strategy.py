@@ -21,12 +21,12 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import pandas as pd
 
-fastf1.Cache.enable_cache('Cache')
+fastf1.Cache.enable_cache('../Cache')
 
 # ── CONFIG ─────────────────────────────────────────────────────────────────────
 YEAR           = 2025
 SHOWCASE_RACE  = 'British Grand Prix'   # race used for the strategy timeline chart
-OUTPUT_DIR     = 'tyre_strategy_files'
+OUTPUT_DIR     = ''
 
 BG = '#0d0d1a'
 COMPOUND_COLORS = {
