@@ -51,7 +51,7 @@ fastf1_project/
 ### `main.py`
 Iterates all completed conventional races in the 2026 season and prints a table of race winners. Stops automatically at any race that hasn't happened yet using UTC timestamps.
 
-### `lap_by_lap.py`
+### `Qatar_lap_by_lap.py`
 Loads the 2025 Qatar Grand Prix race session and produces:
 - A printed table of best lap and average lap time per driver (outlier laps filtered at 115% of personal best)
 - A dual-chart figure: lap times over the race for all drivers, and a fastest-lap bar chart per driver
