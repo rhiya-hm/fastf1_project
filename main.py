@@ -8,13 +8,13 @@ import matplotlib.pyplot as plt
 # Optional but recommended: enables local caching
 fastf1.Cache.enable_cache('cache')
 
-schedule = fastf1.get_event_schedule(2025)
+schedule = fastf1.get_event_schedule(2026)
 schedule = schedule[schedule['RoundNumber'] > 0]
 
 winners: list[Any] = []
 
 for round_number in schedule['RoundNumber']:
-    session: Session = fastf1.get_session(2025, round_number, 'R')
+    session: Session = fastf1.get_session(2026, round_number, 'R')
     if datetime.now(timezone.utc) < session.event['Session5DateUtc'].replace(tzinfo=timezone.utc):
         break
     session.load()
