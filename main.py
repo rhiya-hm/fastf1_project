@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 # Optional but recommended: enables local caching
 fastf1.Cache.enable_cache('cache')
 
-schedule = fastf1.get_event_schedule(2026)
+schedule = fastf1.get_event_schedule(2025)
 schedule = schedule[schedule['RoundNumber'] > 0]
 
 winners: list[Any] = []
