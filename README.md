@@ -83,7 +83,7 @@ Change `SHOWCASE_RACE` at the top of the file to regenerate chart 1 for any race
 source .venv/bin/activate
 
 # Race winners so far this season
-python main.py
+python results.py
 
 # Lap time analysis
 python Lap_by_Laps/lap_by_lap.py
