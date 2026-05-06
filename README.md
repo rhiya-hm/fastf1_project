@@ -34,7 +34,7 @@ fastf1_project/
 ├── miami_predictor.py                   # Random Forest prediction for the 2026 Miami Grand Prix
 ├── telemetry_compare.py                 # Qualifying telemetry comparison (track map + speed trace)
 ├── Lap_by_Laps/
-│   └── Qatar_lap_by_lap.py              # Lap-time table and race charts for Qatar GP 2025
+│   └── lap_by_lap.py                    # Lap-time table and race charts for any race of choice
 ├── tyre_strategy_files/
 │   └── tyre_strategy.py                 # Full 2025 season tyre strategy analysis (3 charts)
 ├── telemetry_compare_files/             # Output folder for telemetry charts
@@ -49,8 +49,8 @@ fastf1_project/
 ### `main.py`
 Iterates all completed conventional races in the 2026 season and prints a table of race winners. Stops automatically at any race that hasn't happened yet using UTC timestamps.
 
-### `Lap_by_Laps/Qatar_lap_by_lap.py`
-Loads the 2025 Qatar Grand Prix race session and produces:
+### `Lap_by_Laps/lap_by_lap.py`
+Loads a session of choice and produces:
 - A printed table of best lap and average lap time per driver (outlier laps filtered at 115% of personal best)
 - A dual-chart figure: lap times over the race for all drivers, and a fastest-lap bar chart per driver
 

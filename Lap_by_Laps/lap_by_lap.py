@@ -10,8 +10,8 @@ CACHE_DIR.mkdir(exist_ok=True)
 fastf1.Cache.enable_cache(str(CACHE_DIR))
 
 # ── 1. LOAD SESSION ───────────────────────────────────────────────────────────
-print("📦 Loading 2026 Miami Grand Prix race data...")
-session = fastf1.get_session(2026, 'Miami Grand Prix', 'R')
+print("📦 Loading 2026 Miami Grand Prix race data...") ##CHANGE RACE HERE
+session = fastf1.get_session(2026, 'Miami Grand Prix', 'R') #CHANGE RACE HERE
 session.load(telemetry=False, weather=False, messages=False)
 
 # ── 2. GET LAP DATA ───────────────────────────────────────────────────────────
@@ -30,7 +30,7 @@ laps = laps[laps['LapTimeSeconds'] <= laps['PersonalBest'] * 1.15]
 
 # ── 3. PRINT TABLE ────────────────────────────────────────────────────────────
 print("\n" + "═" * 70)
-print("🏁  2026 MIAMI GRAND PRIX — LAP TIME SUMMARY PER DRIVER")
+print("🏁  2026 MIAMI GRAND PRIX — LAP TIME SUMMARY PER DRIVER") #CHANGE RACE HERE
 print("═" * 70)
 print(f"{'Driver':<6} {'Team':<25} {'Best Lap':>10} {'Avg Lap':>10} {'Laps':>6}")
 print("─" * 70)
@@ -69,7 +69,7 @@ drivers = [r['Driver'] for r in summary_rows]
 colors = cm.tab20(np.linspace(0, 1, len(drivers)))
 
 fig, axes = plt.subplots(2, 1, figsize=(16, 14))
-fig.suptitle('2026 Miami Grand Prix — Lap-by-Lap Analysis', fontsize=16, fontweight='bold', y=0.98)
+fig.suptitle('2026 Miami Grand Prix — Lap-by-Lap Analysis', fontsize=16, fontweight='bold', y=0.98) #CHANGE RACE HERE
 
 # ── Plot 1: Lap times over race for all drivers ───────────────────────────────
 ax1 = axes[0]
@@ -123,6 +123,6 @@ ax2.grid(True, alpha=0.3, axis='x')
 ax2.set_xlim(summary_df['BestLap'].min() - 2, summary_df['BestLap'].max() + 4)
 
 plt.tight_layout()
-plt.savefig('miami_2026_lap_analysis.png', dpi=150, bbox_inches='tight')
-print("✅ Chart saved as 'miami_2026_lap_analysis.png'")
+plt.savefig('miami_2026_lap_analysis.png', dpi=150, bbox_inches='tight') #CHANGE RACE HERE
+print("✅ Chart saved as 'miami_2026_lap_analysis.png'") #CHANGE RACE HERE
 plt.show()
