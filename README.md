@@ -85,8 +85,8 @@ source .venv/bin/activate
 # Race winners so far this season
 python main.py
 
-# Lap time analysis (Qatar 2025)
-python Lap_by_Laps/Qatar_lap_by_lap.py
+# Lap time analysis
+python Lap_by_Laps/lap_by_lap.py
 
 # Race outcome predictions (Miami 2026)
 python miami_predictor.py
