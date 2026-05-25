@@ -31,7 +31,10 @@ A local cache folder (`Cache/`) is created automatically on first run to avoid r
 ```
 fastf1_project/
 ├── main.py                              # Entry point — prints 2026 race winners to date
-├── miami_predictor.py                   # Random Forest prediction for the 2026 Miami Grand Prix
+├── 2026_predictions                     # Random Forest predictions for 2026 races
+    └── miami_predictor.py               # Random Forest prediction for the 2026 Miami Grand Prix
+    └── monaco_predictor.py              # Random Forest prediction for the 2026 Monaco Grand Prix
+    └── canada_predictor.py              # Random Forest prediction for the 2026 Canada Grand Prix
 ├── telemetry_compare.py                 # Qualifying telemetry comparison (track map + speed trace)
 ├── Lap_by_Laps/
 │   └── lap_by_lap.py                    # Lap-time table and race charts for any race of choice
