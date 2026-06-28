@@ -168,8 +168,8 @@ df_all['RecentForm'] = (
     .transform(lambda x: x.shift(1).rolling(3, min_periods=1).mean())
 )
 
-# Barcelona circuit flag
-df_all['IsBarcelona'] = df_all['EventName'].str.contains('barcelona', case=False).astype(int)
+# Austria circuit flag
+df_all['IsAustria'] = df_all['EventName'].str.contains('Austria', case=False).astype(int)
 
 # Convert types
 df_all['QualiPosition']  = pd.to_numeric(df_all['QualiPosition'],  errors='coerce')
@@ -199,7 +199,7 @@ print("\n🤖 Training Random Forest model...")
 FEATURES = [
     'GridPosition', 'QualiPosition', 'DriverEncoded', 'TeamEncoded',
     'RecentForm', 'RecentQualiForm', 'RecentSprintForm', 'RaceCraft',
-    'IsBarcelona',
+    'IsAustria',
 ]
 
 # Train only on historical data (not 2026)
@@ -221,8 +221,8 @@ print("\n  Feature importance:")
 for feat, imp in importance.items():
     print(f"    {feat}: {imp:.3f}")
 
-# ── 5. PREDICT Barcelona 2026 ─────────────────────────────────────────────────────
-print("\n🏁 Building Barcelona 2026 predictions...")
+# ── 5. PREDICT Austria 2026 ─────────────────────────────────────────────────────
+print("\n🏁 Building Austria 2026 predictions...")
 
 # Per-driver 2026 stats: averages across the season so far
 driver_2026_stats = df_2026.groupby(['FullName', 'TeamName']).agg(
@@ -236,13 +236,13 @@ driver_2026_stats = df_2026.groupby(['FullName', 'TeamName']).agg(
 ).reset_index()
 
 # Build prediction input
-barcelona_input = driver_2026_stats.copy()
-barcelona_input['IsMonaco'] = 1
-barcelona_input['GridPosition']     = barcelona_input['AvgGrid']
-barcelona_input['QualiPosition']    = barcelona_input['AvgQuali']
-barcelona_input['RecentQualiForm']  = barcelona_input['AvgQuali']
-barcelona_input['RecentSprintForm'] = barcelona_input['AvgSprint']
-barcelona_input['RaceCraft']        = barcelona_input['AvgPositionsGained']
+austria_input = driver_2026_stats.copy()
+austria_input['IsMonaco'] = 1
+austria_input['GridPosition']     = austria_input['AvgGrid']
+austria_input['QualiPosition']    = austria_input['AvgQuali']
+austria_input['RecentQualiForm']  = austria_input['AvgQuali']
+austria_input['RecentSprintForm'] = austria_input['AvgSprint']
+austria_input['RaceCraft']        = austria_input['AvgPositionsGained']
 
 # Safely encode — handle any new drivers not seen in training
 def safe_encode(encoder, values):
@@ -252,21 +252,21 @@ def safe_encode(encoder, values):
         for v in values
     ])
 
-barcelona_input['DriverEncoded'] = safe_encode(le_driver, barcelona_input['FullName'])
-barcelona_input['TeamEncoded']   = safe_encode(le_team,   barcelona_input['TeamName'])
-barcelona_input['IsBarcelona'] = 1
-X_barcelona = barcelona_input[FEATURES].fillna(barcelona_input[FEATURES].mean(numeric_only=True))
-barcelona_input['PredictedPosition'] = model.predict(X_barcelona)
-barcelona_input = barcelona_input.sort_values('PredictedPosition').reset_index(drop=True)
-barcelona_input.index += 1  # 1-based ranking
+austria_input['DriverEncoded'] = safe_encode(le_driver, austria_input['FullName'])
+austria_input['TeamEncoded']   = safe_encode(le_team,   austria_input['TeamName'])
+austria_input['IsAustria'] = 1
+X_austria = austria_input[FEATURES].fillna(austria_input[FEATURES].mean(numeric_only=True))
+austria_input['PredictedPosition'] = model.predict(X_austria)
+austria_input = austria_input.sort_values('PredictedPosition').reset_index(drop=True)
+austria_input.index += 1  # 1-based ranking
 
 # ── 6. OUTPUT ─────────────────────────────────────────────────────────────────
 print("\n" + "═" * 55)
-print("🏆  BARCELONA GRAND PRIX 2026 — PREDICTED FINISHING ORDER")
+print("🏆  AUSTRIA GRAND PRIX 2026 — PREDICTED FINISHING ORDER")
 print("═" * 55)
 print(f"{'Pos':<5} {'Driver':<25} {'Team':<25}")
 print("─" * 55)
-for pos, row in barcelona_input.iterrows():
+for pos, row in austria_input.iterrows():
     print(f"{pos:<5} {row['FullName']:<25} {row['TeamName']:<25}")
 print("═" * 55)
 print(f"\n⚠️  Note: Predictions are based on {len(df)} historical race results")
